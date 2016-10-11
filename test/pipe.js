@@ -50,34 +50,14 @@ assert.equal(shell.error(), null);
 assert.equal(result.toString(), shell.cat('resources/uniq/pipeSorted').toString());
 
 // Synchronous exec
-// TODO: add windows tests
-if (process.platform !== 'win32') {
-  // unix-specific
-  if (shell.which('grep').stdout) {
-    result = shell.cat('resources/grep/file').exec("grep 'alpha*beta'");
-    assert.equal(shell.error(), null);
-    assert.equal(result, 'alphaaaaaaabeta\nalphbeta\n');
-  } else {
-    console.error('Warning: Cannot verify piped exec');
-  }
-} else {
-  console.error('Warning: Cannot verify piped exec');
-}
+// unix-specific
+result = shell.cat('resources/grep/file').cmd('shx', 'grep', 'alpha*beta');
+assert.equal(shell.error(), null);
+assert.equal(result, 'alphaaaaaaabeta\nalphbeta\n');
 
 // Async exec
-// TODO: add windows tests
-if (process.platform !== 'win32') {
-  // unix-specific
-  if (shell.which('grep').stdout) {
-    shell.cat('resources/grep/file').exec("grep 'alpha*beta'", function (code, stdout) {
-      assert.equal(code, 0);
-      assert.equal(stdout, 'alphaaaaaaabeta\nalphbeta\n');
-      shell.exit(123);
-    });
-  } else {
-    console.error('Warning: Cannot verify piped exec');
-  }
-} else {
-  console.error('Warning: Cannot verify piped exec');
-  shell.exit(123);
-}
+shell.cat('resources/grep/file').exec("shx grep 'alpha*beta'", function (code, stdout) {
+  assert.equal(code, 0);
+  assert.equal(stdout, 'alphaaaaaaabeta\nalphbeta\n');
+});
+shell.exit(123);

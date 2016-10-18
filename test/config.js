@@ -29,7 +29,7 @@ shell.mkdir('-p', 'tmp');
 var file = 'tmp/tempscript' + Math.random() + '.js';
 var script = 'require(\'../../global.js\'); config.silent=true; config.fatal=false; cp("this_file_doesnt_exist", "."); echo("got here");';
 shell.ShellString(script).to(file);
-child.exec(JSON.stringify(process.execPath) + ' ' + file, function (err, stdout) {
+child.exec(JSON.stringify(common.nodeBinPath) + ' ' + file, function (err, stdout) {
   assert.ok(stdout.match('got here'));
 
   //
@@ -39,7 +39,7 @@ child.exec(JSON.stringify(process.execPath) + ' ' + file, function (err, stdout)
   file = 'tmp/tempscript' + Math.random() + '.js';
   script = 'require(\'../../global.js\'); config.silent=true; config.fatal=true; cp("this_file_doesnt_exist", "."); echo("got here");';
   shell.ShellString(script).to(file);
-  child.exec(JSON.stringify(process.execPath) + ' ' + file, function (err2, stdout2) {
+  child.exec(JSON.stringify(common.nodeBinPath) + ' ' + file, function (err2, stdout2) {
     assert.ok(!stdout2.match('got here'));
 
     shell.exit(123);

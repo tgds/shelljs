@@ -1,4 +1,5 @@
 var shell = require('..');
+var common = require('../src/common');
 var assert = require('assert');
 var fs = require('fs');
 var crypto = require('crypto');
@@ -59,7 +60,7 @@ assert.ok(shell.error());
 testFile = tmpFile(false);
 var testFile2 = tmpFile();
 shell.touch(testFile2);
-shell.exec(JSON.stringify(process.execPath) + ' resources/exec/slow.js 3000');
+shell.exec(JSON.stringify(common.nodeBinPath) + ' resources/exec/slow.js 3000');
 result = shell.touch(testFile);
 assert.ok(!shell.error());
 assert.equal(result.code, 0);

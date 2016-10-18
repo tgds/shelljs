@@ -107,7 +107,7 @@ assert.ok(result.to);
 assert.ok(result.toEnd);
 
 // Commands that fail will still output error messages to stderr
-result = shell.exec(JSON.stringify(process.execPath) + ' -e "require(\'../global\'); ls(\'noexist\'); cd(\'noexist\');"');
+result = shell.exec(JSON.stringify(common.nodeBinPath) + ' -e "require(\'../global\'); ls(\'noexist\'); cd(\'noexist\');"');
 assert.equal(result.stdout, '');
 assert.equal(result.stderr, 'ls: no such file or directory: noexist\ncd: no such file or directory: noexist\n');
 

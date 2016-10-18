@@ -1,4 +1,5 @@
 var shell = require('..');
+var common = require('../src/common');
 var child = require('child_process');
 var assert = require('assert');
 
@@ -12,7 +13,7 @@ var script = 'require(\'../../make.js\');' +
              '}';
 
 shell.ShellString(script).to(file);
-child.exec(JSON.stringify(process.execPath) + ' ' + file, function (err, stdout) {
+child.exec(JSON.stringify(common.nodeBinPath) + ' ' + file, function (err, stdout) {
   assert.ok(stdout.match('first'));
   assert.ok(!stdout.match('second')); // Make should die on errors, so this should never get echoed
 

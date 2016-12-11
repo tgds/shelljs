@@ -1,5 +1,5 @@
 var common = require('./common');
-var fs = require('fs');
+var fs = require('original-fs');
 
 common.register('rm', _rm, {
   cmdOptions: {
